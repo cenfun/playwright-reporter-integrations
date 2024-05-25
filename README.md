@@ -1,7 +1,6 @@
 # Playwright Reporter Integrations
-[Playwright](https://github.com/microsoft/playwright) + [Monocart Reporter](https://github.com/cenfun/monocart-reporter) Integration Examples
 
-|![](assets/playwright.png) ![](assets/monocart.png)|Integration Examples|
+|![](assets/playwright.png) ![](assets/monocart.png)|[Playwright](https://github.com/microsoft/playwright) + [Monocart Reporter](https://github.com/cenfun/monocart-reporter) Integration Examples|
 |:-:|:---|
 |![](assets/email.png)|[Send Email](send-email)|
 |![](assets/testrail.png)|[Testrail Integration](testrail)|
