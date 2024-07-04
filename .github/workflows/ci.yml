@@ -33,6 +33,9 @@ jobs:
       - run: npx playwright install --with-deps
       - run: npx playwright test -c github-actions-summary || exit 0
 
+      - name: Show Summary
+        run: cat .temp/summary.html >> $GITHUB_STEP_SUMMARY
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
