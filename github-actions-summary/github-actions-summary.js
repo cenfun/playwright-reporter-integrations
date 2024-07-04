@@ -3,7 +3,7 @@ import path from 'path';
 import EC from 'eight-colors';
 import { summary } from '@actions/core';
 
-export default (reportData, helper) => {
+export default async (reportData, helper) => {
 
     const summaryDir = path.resolve(import.meta.dirname, '../.temp');
     if (!fs.existsSync(summaryDir)) {
@@ -15,6 +15,7 @@ export default (reportData, helper) => {
     const summaryFile = path.resolve(summaryDir, 'summary.html');
     fs.writeFileSync(summaryFile, '');
     process.env.GITHUB_STEP_SUMMARY = summaryFile;
+    process.env.GITHUB_ACTIONS = 'true';
 
     summary.addHeading(reportData.name, '2');
     summary.addRaw(`> ${reportData.dateH} (${reportData.durationH})`);
@@ -49,9 +50,7 @@ export default (reportData, helper) => {
         }
     }
 
-    summary.write({
-        overwrite: true
-    });
+    await summary.write();
 
     EC.logGreen('[github-actions-summary] completed');
 
