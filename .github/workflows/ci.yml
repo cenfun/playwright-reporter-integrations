@@ -31,5 +31,10 @@ jobs:
 
       - run: npm i
       - run: npx playwright install --with-deps
-      - run: npx playwright test -c github-actions-summary
-        continue-on-error: true
+      - run: npx playwright test -c github-actions-summary || exit 0
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: .temp 
