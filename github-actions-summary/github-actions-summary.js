@@ -18,14 +18,24 @@ export default async (reportData, helper) => {
 
     // https://github.com/actions/toolkit/tree/main/packages/core
     summary.addHeading(reportData.name, '2');
-    summary.addRaw(`📅 ${reportData.dateH} (🕒${reportData.durationH})`);
+    summary.addRaw(`📅 ${reportData.dateH}`);
+    summary.addEOL();
+    summary.addRaw(`🕒${reportData.durationH}`);
     summary.addEOL();
 
     const rows = [];
-    ['tests', 'passed', 'flaky', 'skipped', 'failed'].forEach((k) => {
+
+    const icons = {
+        'tests': ' ',
+        'passed': '🟢',
+        'flaky': '🟡',
+        'skipped': '🔘',
+        'failed': '🔴'
+    };
+    Object.keys(icons).forEach((k) => {
         const item = reportData.summary[k];
         rows.push([{
-            data: item.name
+            data: `${icons[k]} ${item.name}`
         }, {
             data: item.value
         }, {
