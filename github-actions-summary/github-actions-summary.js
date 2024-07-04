@@ -13,6 +13,7 @@ export default (reportData, helper) => {
 
     const summaryFile = path.resolve(summaryDir, 'test-summary.md');
     process.env.GITHUB_STEP_SUMMARY = summaryFile;
+    process.env.GITHUB_ACTIONS = 'true';
 
     const {
         name, dateH, durationH, summary
