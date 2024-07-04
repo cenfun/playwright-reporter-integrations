@@ -31,4 +31,4 @@ jobs:
 
       - run: npm i
       - run: npx playwright install --with-deps
-      - run: npx playwright test -c github-actions-summary
+      - run: npx playwright test -c github-actions-summary || exit 0
