@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import EC from 'eight-colors';
+import { summary } from '@actions/core';
 
 export default (reportData, helper) => {
 
@@ -11,27 +12,31 @@ export default (reportData, helper) => {
         });
     }
 
-    const summaryFile = path.resolve(summaryDir, 'test-summary.md');
+    const summaryFile = path.resolve(summaryDir, 'summary.html');
+    fs.writeFileSync(summaryFile, '');
     process.env.GITHUB_STEP_SUMMARY = summaryFile;
-    process.env.GITHUB_ACTIONS = 'true';
 
-    const {
-        name, dateH, durationH, summary
-    } = reportData;
+    summary.addHeading(reportData.name, '2');
+    summary.addRaw(`> ${reportData.dateH} (${reportData.durationH})`);
+    summary.addEOL();
 
-    const lines = [`## ${name}`, `> ${dateH} (${durationH})`];
-
+    const rows = [];
     ['tests', 'passed', 'flaky', 'skipped', 'failed'].forEach((k) => {
-        const item = summary[k];
+        const item = reportData.summary[k];
         const percent = item.percent ? ` (${item.percent})` : '';
-        lines.push(`- **${item.name}** ${item.value} ${percent}`);
+        rows.push([{
+            data: item.name
+        }, {
+            data: item.value
+        }, {
+            data: percent
+        }]);
     });
+    summary.addTable(rows);
 
-    lines.push('\n  ');
-
-    if (summary.passed.value === summary.tests.value) {
-        lines.push('✔ Congratulations! All tests passed.');
-    } else if (summary.failed.value > 0) {
+    if (reportData.summary.passed.value === reportData.summary.tests.value) {
+        summary.addRaw('✔ Congratulations! All tests passed.');
+    } else if (reportData.summary.failed.value > 0) {
         // @owners of all failed cases
         const owners = [];
         helper.forEach((item) => {
@@ -40,11 +45,13 @@ export default (reportData, helper) => {
             }
         });
         if (owners.length) {
-            lines.push(`Hey ${owners.join(' ')}, please fix the failed cases and run test again.`);
+            summary.addRaw(`Hey ${owners.join(' ')}, please fix the failed cases and run test again.`);
         }
     }
 
-    fs.writeFileSync(summaryFile, lines.join('\n'));
+    summary.write({
+        overwrite: true
+    });
 
     EC.logGreen('[github-actions-summary] completed');
 
