@@ -12,6 +12,7 @@
 |![](assets/discord.png)|[Discord Integration](discord-webhook)|
 |![](assets/teams.png)|[Teams Integration](teams-webhook)|
 |![](assets/browserstack.png)|[BrowserStack Integration](browserstack)|
+|![](assets/github.png)|[Github Actions Summary](github-actions-summary)|
 |![](assets/dingtalk.png)|[Dingtalk 钉钉](dingtalk-webhook)|
 |![](assets/weixin.png)|[Weixin 企业微信](weixin-webhook)|
 |![](assets/feishu.png)|[Feishu 飞书](feishu-webhook)|
