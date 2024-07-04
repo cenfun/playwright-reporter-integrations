@@ -18,9 +18,9 @@ export default async (reportData, helper) => {
 
     // https://github.com/actions/toolkit/tree/main/packages/core
     summary.addHeading(reportData.name, '2');
-    summary.addRaw(`📅 ${reportData.dateH}`);
+    summary.addRaw(`📅 ${reportData.dateH} `);
     summary.addEOL();
-    summary.addRaw(`🕒${reportData.durationH}`);
+    summary.addRaw(`🕒${reportData.durationH} `);
     summary.addEOL();
 
     const rows = [];
