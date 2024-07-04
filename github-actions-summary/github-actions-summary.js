@@ -16,26 +16,26 @@ export default async (reportData, helper) => {
     fs.writeFileSync(summaryFile, '');
     process.env.GITHUB_STEP_SUMMARY = summaryFile;
 
+    // https://github.com/actions/toolkit/tree/main/packages/core
     summary.addHeading(reportData.name, '2');
-    summary.addRaw(`> ${reportData.dateH} (${reportData.durationH})`);
+    summary.addRaw(`📅 ${reportData.dateH} (🕒${reportData.durationH})`);
     summary.addEOL();
 
     const rows = [];
     ['tests', 'passed', 'flaky', 'skipped', 'failed'].forEach((k) => {
         const item = reportData.summary[k];
-        const percent = item.percent ? ` (${item.percent})` : '';
         rows.push([{
             data: item.name
         }, {
             data: item.value
         }, {
-            data: percent
+            data: item.percent
         }]);
     });
     summary.addTable(rows);
 
     if (reportData.summary.passed.value === reportData.summary.tests.value) {
-        summary.addRaw('✔ Congratulations! All tests passed.');
+        summary.addRaw('✅ Congratulations! All tests passed.');
     } else if (reportData.summary.failed.value > 0) {
         // @owners of all failed cases
         const owners = [];

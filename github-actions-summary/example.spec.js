@@ -4,6 +4,9 @@ test('passed test', () => {
 
 });
 
+/**
+ * @owner Mark
+ */
 test('failed test', () => {
     expect(false).toBe(true);
 });
